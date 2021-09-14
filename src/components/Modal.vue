@@ -66,7 +66,6 @@ export default {
     },
   },
   mounted() {
-    console.log("test: ", this.userSave);
     const modal = document.querySelector("#completeRegister");
     modal.setAttribute("style", "display:block;padding-right: 17px;");
     modal.classList.add("show");
