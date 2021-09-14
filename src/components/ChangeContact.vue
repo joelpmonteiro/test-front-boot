@@ -63,7 +63,7 @@
                 <label for="recipient-name" class="col-form-label">Nome:</label>
                 <input
                   type="text"
-                  v-model.lazy="$v.nome.$model"
+                  v-model="$v.nome.$model"
                   @change="$v.nome.$touch()"
                   class="form-control"
                   id="recipient-name"
@@ -88,8 +88,8 @@
                 >
                 <input
                   type="tel"
-                  v-model.lazy="$v.telefone.$model"
-                  @change="$v.nome.$touch()"
+                  v-model="$v.telefone.$model"
+                  @change="$v.telefone.$touch()"
                   class="form-control"
                   id="telefone"
                   v-mask="'(##) ####-####'"
@@ -196,10 +196,10 @@ export default {
       const modal = document.querySelector("#ChangeContactModel");
       modal.removeAttribute("style");
       modal.classList.remove("show");
+      this.userSave = null;
     },
     validationClass(className) {
       const field = this.$v[className];
-      console.log(this.$v[className]);
       if (field) return { "md-invalid": field.$invalid && field.$dirty };
     },
   },

@@ -59,14 +59,13 @@ export default {
   methods: {
     contacts(contact) {
       this.listContacts.push({ ...contact });
+      localStorage.setItem(`lista`, JSON.stringify(this.listContacts));
     },
     excluir(id) {
       this.$delete(this.listContacts, id);
+      localStorage.setItem(`lista`, JSON.stringify(this.listContacts));
     },
     editar(newContact, oldContact) {
-      // console.log("contato alterado: ", newContact);
-      // console.log(`old: `, oldContact);
-
       this.listContacts.map((x) => {
         if (x.nome === oldContact.nome) {
           x.nome = newContact.nome;
@@ -74,7 +73,7 @@ export default {
         }
         return x;
       });
-      console.log(`nova lista: `, this.listContacts);
+      localStorage.setItem(`lista`, JSON.stringify(this.listContacts));
     },
     OpenModalEditar(index) {
       const modal = document.querySelector("#ChangeContactModel");
@@ -83,6 +82,13 @@ export default {
       this.editContacts = this.listContacts[index];
       // this.$set(this.editContacts, 0, this.listContacts[index]);
     },
+  },
+  created() {
+    // eslint-disable-next-line no-prototype-builtins
+    if (localStorage.hasOwnProperty("lista")) {
+      this.listContacts = JSON.parse(localStorage.getItem("lista"));
+      console.log(`dados do localstorage: `, this.listContacts);
+    }
   },
 };
 </script>

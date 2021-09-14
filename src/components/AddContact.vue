@@ -33,7 +33,7 @@
               class="close"
               data-dismiss="modal"
               aria-label="Close"
-              @click.prevent.stop="close"
+              @click.prevent.stop="close(`addModel`)"
             >
               <span aria-hidden="true">&times;</span>
             </button>
@@ -47,7 +47,7 @@
                   >
                   <input
                     type="text"
-                    v-model.lazy="$v.contact.nome.$model"
+                    v-model="$v.contact.nome.$model"
                     class="form-control"
                     @change="$v.contact.nome.$touch()"
                     id="recipient-name"
@@ -73,7 +73,7 @@
                   >
                   <input
                     type="tel"
-                    v-model.lazy="$v.contact.telefone.$model"
+                    v-model="$v.contact.telefone.$model"
                     class="form-control"
                     v-mask="'(##) ####-####'"
                     id="telefone"
@@ -172,16 +172,17 @@ export default {
     },
     close(idModal) {
       if (idModal !== "") {
-        console.log(`entrou`);
         const modal = document.querySelector(`#${idModal}`);
-        console.log(modal);
         modal.removeAttribute("style");
         modal.classList.remove("show");
       }
+      this.$v.$reset();
+      this.contact.nome = "";
+      this.contact.telefone = "";
     },
     addContactList() {
       this.save = true;
-      if (!this.$v.$invalid) {
+      if (!this.$v.$invalid && !this.$v.$error && this.$v.$dirty) {
         if (this.contact !== null) {
           if (this.contact.nome !== "" && this.contact.telefone !== "") {
             this.$emit("send-info", this.contact);
