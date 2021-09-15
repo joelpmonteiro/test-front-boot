@@ -10,9 +10,15 @@
         </tr>
       </thead>
       <tbody v-if="listContacts.length > 0">
-        <tr v-for="(value, index) in listContacts" :key="index">
+        <tr
+          v-for="(value, index) in listContacts"
+          :key="index"
+          :class="value.telefone.substring(0, 4) === '(11)' ? 'ddd' : ''"
+        >
           <th scope="row">{{ value.nome }}</th>
-          <td>{{ value.telefone }}</td>
+          <td>
+            {{ value.telefone }}
+          </td>
           <td>
             <input type="text" name="idArray" hidden="hidden" :value="index" />
             <button
@@ -55,6 +61,12 @@ export default {
       editContacts: {},
       indexID: null,
     };
+  },
+  computed: {
+    checkDD: (index) => {
+      console.log("ts", index.substring(0, 4));
+      return index.substring(0, 4);
+    },
   },
   methods: {
     contacts(contact) {
@@ -108,5 +120,9 @@ li {
 }
 a {
   color: #42b983;
+}
+
+.ddd {
+  color: blue;
 }
 </style>
